@@ -34,6 +34,6 @@ jobs:
 
       - name: Build and push the image
         run: |
-          echo "${{ secrets.ACCESS_TOKEN }}" | docker login ghcr.io -u kelle128 --password-stdin  
-          docker build -t ghcr.io/kelle128/prime-service:latest --file Dockerfile .  
-          docker push ghcr.io/kelle128/prime-service:latest
+          echo "${{ secrets.ACCESS_TOKEN }}" | docker login ghcr.io -u kelle --password-stdin  
+          docker build -t ghcr.io/kelle/prime-service:latest --file Dockerfile .  
+          docker push ghcr.io/kelle/prime-service:latest
