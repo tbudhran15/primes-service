@@ -6,16 +6,19 @@ on:
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write  # Required to push to GHCR
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4  # Updated version
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3  # Updated version
         with:
-          java-version: '17'
           distribution: 'adopt'
+          java-version: '17'
 
       - name: Build the package
         run: mvn --batch-mode -DskipTests package
@@ -23,8 +26,11 @@ jobs:
       - name: Run the unit tests
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      - name: Build and push the image
+      - name: Log in to GHCR
+        run: echo "${{ secrets.ACCESS_TOKEN }}" | docker login ghcr.io -u kelle --password-stdin
+
+      - name: Build and push the Docker image
         run: |
-          echo "${{ secrets.ACCESS_TOKEN }}" | docker login ghcr.io -u kelle --password-stdin  
-          docker build -t ghcr.io/kelle/prime-service:latest --file Dockerfile .  
-          docker push ghcr.io/kelle/prime-service:latest  
+          IMAGE_NAME=ghcr.io/kelle/prime-service:latest
+          docker build -t $IMAGE_NAME --file Dockerfile .
+          docker push $IMAGE_NAME
