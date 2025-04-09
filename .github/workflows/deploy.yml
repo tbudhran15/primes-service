@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
-
+      #Tarash
       # Docker Build and Push with Distribution specified
       - name: Docker Build and Push
         uses: docker/build-push-action@v2
