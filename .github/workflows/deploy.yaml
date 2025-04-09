@@ -1,11 +1,14 @@
 name: Deploy Primes Service
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres
@@ -20,11 +23,13 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+
     env:
       SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
       SPRING_DATASOURCE_UN: ${{ secrets.SPRING_DATASOURCE_UN }}
       SPRING_DATASOURCE_PW: ${{ secrets.SPRING_DATASOURCE_PW }}
       SERVICE_VERSION: ${{ secrets.SERVICE_VERSION }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,13 +39,23 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          
+
       - name: Build app
         run: ./gradlew build
         
       - name: Run tests
         run: ./gradlew test
         
+      - name: Check Docker version
+        run: docker --version  # Ensure Docker is installed
+        
+      - name: Make scripts executable
+        run: |
+          chmod +x ./scripts/deploy.sh
+          chmod +x ./scripts/build-image.sh
+          chmod +x ./scripts/push-to-acr.sh
+          chmod +x ./scripts/push-to-ghcr.sh
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         
