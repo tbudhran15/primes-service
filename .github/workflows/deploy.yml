@@ -60,12 +60,11 @@ jobs:
 
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
-      #Tarash
-      # Docker Build and Push with Distribution specified
+
+      # Docker Build and Push step (with distribution input)
       - name: Docker Build and Push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/YOUR_GITHUB_USERNAME/your-repo-name:latest
-          distribution: linux/amd64  # <-- This is the required 'distribution' input
+          tags: ghcr.io/YOUR_G_
