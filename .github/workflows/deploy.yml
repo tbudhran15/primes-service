@@ -61,7 +61,7 @@ jobs:
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
 
-      # Docker Build and Push step (with distribution input)
+      # Docker Build and Push (with distribution input)
       - name: Docker Build and Push
         uses: docker/build-push-action@v2
         with:
