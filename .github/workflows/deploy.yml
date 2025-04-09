@@ -45,7 +45,6 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-
       - name: Build Docker image
         run: ./scripts/build-image.sh
 
@@ -62,3 +61,11 @@ jobs:
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
 
+      # Add the `distribution` input for docker build-push-action if it's used here:
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/YOUR_USERNAME/your-image:latest
+          distribution: linux/amd64  # <- This is the missing input
