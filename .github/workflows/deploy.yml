@@ -61,14 +61,11 @@ jobs:
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
 
-      # Docker Build and Push step (with distribution input)
+      # Corrected Docker Build and Push step with platform (architecture) input
       - name: Docker Build and Push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ghcr.io/YOUR_GITHUB_USERNAME/your-image:latest
-          # Specify distribution correctly here
-          platform: linux/amd64  # <-- This is the correct 'platform' input for the architecture
-
-
+          platform: linux/amd64  # This is the correct input for platform architecture
