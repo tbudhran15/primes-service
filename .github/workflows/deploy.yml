@@ -61,11 +61,12 @@ jobs:
       - name: Deploy to AKS
         run: ./scripts/deploy.sh
 
-      # Add the `distribution` input for docker build-push-action if it's used here:
+      # **Remove duplicate Docker Build and Push step**
+      # If you're using `docker/build-push-action`, add it in a specific step.
       - name: Docker Build and Push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/YOUR_USERNAME/your-image:latest
+          tags: ghcr.io/YOUR_GITHUB_USERNAME/your-image:latest
           distribution: linux/amd64  # <- This is the missing input
