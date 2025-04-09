@@ -45,11 +45,7 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: build/reports/tests/test
+   
 
       - name: Build Docker image
         run: ./scripts/build-image.sh
