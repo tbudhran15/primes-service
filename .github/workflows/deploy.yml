@@ -67,4 +67,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/YOUR_G_
+          tags: ghcr.io/YOUR_GITHUB_USERNAME/your-image:latest
+          # Specify distribution correctly here
+          platform: linux/amd64  # <-- This is the correct 'platform' input for the architecture
+
+
